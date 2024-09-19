@@ -1,0 +1,11 @@
+FROM ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install -y build-essential m4 git cmake ninja-build locales
+RUN apt-get install -y libglu1-mesa-dev libgtk-4-dev libdbus-1-dev libwebkit2gtk-4.1-dev
+RUN apt-get install -y texinfo autoconf automake libtool
+
+RUN locale-gen en_US.UTF-8
+
+ENV LANG=en_US.UTF-8
+ENV CMAKE_GENERATOR=Ninja

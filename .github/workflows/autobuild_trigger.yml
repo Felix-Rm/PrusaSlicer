@@ -1,0 +1,56 @@
+name: Check Upstream Release
+
+on:
+  workflow_dispatch:
+  push:
+  schedule:
+    - cron: '0 */12 * * *'  # Runs every 12 hours
+
+jobs:
+  check-release:
+    runs-on: ubuntu-latest
+
+    outputs:
+      tag: ${{ steps.upstream_release.outputs.tag }}
+      name: ${{ steps.upstream_release.outputs.name }}
+      body: ${{ steps.upstream_release.outputs.body }}
+      pre_release: ${{ steps.upstream_release.outputs.pre_release }}
+      start_autobuild: ${{ steps.check_release.outputs.start_autobuild }}
+
+    steps:
+      - name: Get Latest Release from Upstream
+        id: upstream_release
+        run: |
+          curl -s https://api.github.com/repos/prusa3d/PrusaSlicer/releases/latest > upstream_release.json
+          {
+            echo 'name<<$EOF'
+            cat upstream_release.json | jq -r .name
+            echo '$EOF'
+          } >> $GITHUB_OUTPUT
+          {
+            echo 'body<<$EOF'
+            cat upstream_release.json | jq -r .body
+            echo '$EOF'
+          } >> $GITHUB_OUTPUT
+          echo "tag=$(cat upstream_release.json | jq -r .tag_name)" >> $GITHUB_OUTPUT
+          echo "pre_release=$(cat upstream_release.json | jq -r .prerelease)" >> $GITHUB_OUTPUT
+
+      - name: Get Latest Release from this Repository
+        id: current_release
+        run: |
+          curl -s https://api.github.com/repos/Felix-Rm/PrusaSlicer/releases/latest > current_release.json
+          echo "tag=$(cat current_release.json | jq -r .tag_name)" >> $GITHUB_OUTPUT
+      
+      - name: Check if new release is available
+        id: check_release
+        run: echo "start_autobuild=$(test ${{ steps.upstream_release.outputs.tag }} != ${{ steps.current_release.outputs.tag }} && echo true || echo false)" >> $GITHUB_OUTPUT
+
+  start-autobuild:
+    needs: check-release
+    if: ${{ needs.check-release.outputs.start_autobuild == 'true' }}
+    uses: ./.github/workflows/autobuild.yml
+    with:
+      tag: ${{ needs.check-release.outputs.tag }}
+      name: ${{ needs.check-release.outputs.name }}
+      body: ${{ needs.check-release.outputs.body }}
+      pre_release: ${{ fromJson(needs.check-release.outputs.pre_release) }}

@@ -1,0 +1,7 @@
+autobuild/build_dep_linux
+autobuild/build_linux
+autobuild/src
+
+build_linux
+.directory
+.vscode

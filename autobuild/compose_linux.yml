@@ -1,0 +1,31 @@
+x-common-configuation: &common-configuation
+  build:
+    dockerfile: dockerfile_linux
+  volumes:
+    - .:/build
+  working_dir: /build
+  user: ubuntu
+
+services:
+  autosetup:
+    <<: *common-configuation
+    command: sh checkout_linux.sh
+    environment:
+      - AUTOSETUP_TARGET_DIR=/build/src
+      - AUTOSETUP_FORK_REPO_URL=https://github.com/Felix-Rm/PrusaSlicer.git
+      - AUTOSETUP_UPSTREAM_REPO_URL=https://github.com/prusa3d/PrusaSlicer.git
+      - AUTOSETUP_FORK_BASE_BRANCH=master
+      - AUTOSETUP_UPSTREAM_BASE_BRANCH=master
+      - AUTOSETUP_FEATURE_BRANCH_STACK=
+
+  autobuild:
+    <<: *common-configuation
+    depends_on:
+      autosetup:
+        condition: service_completed_successfully
+    command: sh build_linux.sh
+    environment:
+      - AUTOBUILD_SOURCE_DIR=/build/src
+      - AUTOBUILD_INSTALL_DIR=/build/install
+      - AUTOBUILD_BUILD_DIR=/build/build_linux
+      - AUTOBUILD_DEP_BUILD_DIR=/build/build_dep_linux

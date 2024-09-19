@@ -1,0 +1,4 @@
+services:
+  autosetup:
+    build:
+      dockerfile: dockerfile_windows
