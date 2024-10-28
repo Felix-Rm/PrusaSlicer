@@ -38,6 +38,20 @@ static float constrained_map(float value, float min, float max, float out_min, f
     return out_min * (1 - t) + out_max * t;
 }
 
+static float generate_layer_exposure_time(
+    int current_layer, int bottom_layers, int faded_layers,
+    float initial_exposure_time, float exposure_time
+) {
+    if (current_layer <= bottom_layers) {
+        return initial_exposure_time;
+    } else {
+        return constrained_map(
+            current_layer - bottom_layers, 1, faded_layers + 1,
+            initial_exposure_time, exposure_time
+        );
+    }
+}
+
 static void write_thumbnail(
     size_t width, size_t height, const ThumbnailsList &thumbnails, uint16_t *buffer
 ) {
@@ -375,8 +389,8 @@ void GOOWriter::export_print(
         l_def.position_mm = hton<float>(
             mat.initial_layer_height.getFloat() + layer_height * (current_layer - 1)
         );
-        l_def.exposure_time_s = hton(constrained_map(
-            current_layer, 1, obj_stats.faded_layers + 1, //
+        l_def.exposure_time_s = hton(generate_layer_exposure_time(
+            current_layer, obj_stats.bottom_layers, obj_stats.faded_layers,
             mat.initial_exposure_time, mat.exposure_time
         ));
         l_def.off_time_s = 0;
