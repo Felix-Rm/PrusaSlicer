@@ -331,7 +331,7 @@ void GOOWriter::export_print(
     h_info.after_lift_time_s = hton(option_as_float(mat.sla_wait_after_lift));
     h_info.after_retract_time_s = hton(option_as_float(mat.sla_wait_after_retract));
     h_info.bottom_exposure_time_s = hton(option_as_float(mat.initial_exposure_time));
-    h_info.bottom_layers = hton<uint32_t>(obj_stats.faded_layers + 1), // NOTE: Faded layers + initial layer have increased exposure
+    h_info.bottom_layers = hton<uint32_t>(obj_stats.bottom_layers),
     h_info.bottom_lift_distance_mm = hton(option_as_float(mat.sla_initial_primary_lift_distance));
     h_info.bottom_lift_speed_mm_min = hton(option_as_float(mat.sla_initial_primary_lift_speed));
     h_info.lift_distance_mm = hton(option_as_float(mat.sla_primary_lift_distance));
