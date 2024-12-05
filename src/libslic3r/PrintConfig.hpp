@@ -988,7 +988,7 @@ PRINT_CONFIG_CLASS_DEFINE(
     //Number of the layers needed for the exposure time fade [3;20]
     ((ConfigOptionInt,  faded_layers))/*= 10*/
     //Number of layers the initial exposure time is repeated for [1;20]
-    ((ConfigOptionInt,  bottom_layers))/*= 10*/
+    ((ConfigOptionInt,  bottom_layers))/*= 2*/
 
     ((ConfigOptionFloat, slice_closing_radius))
     ((ConfigOptionEnum<SlicingMode>, slicing_mode))

@@ -4189,7 +4189,7 @@ void PrintConfigDef::init_sla_params()
     def->min = 1;
     def->max = 20;
     def->mode = comExpert;
-    def->set_default_value(new ConfigOptionInt(10));
+    def->set_default_value(new ConfigOptionInt(2));
 
     def = this->add("min_exposure_time", coFloat);
     def->label = L("Minimum exposure time");
