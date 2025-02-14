@@ -350,7 +350,7 @@ void GOOWriter::export_print(
     h_info.second_retract_speed_mm_min = hton(option_as_float(mat.sla_secondary_retract_speed));
     h_info.bottom_light_pwm = hton(option_as_uint16(mat.initial_exposure_pwm));
     h_info.light_pwm = hton(option_as_uint16(mat.exposure_pwm));
-    h_info.advance_mode_layer_definition = true;
+    h_info.advance_mode_layer_definition = m_cfg.goo_advanced_mode;
     h_info.printing_time_s = hton<uint32_t>(stats.estimated_print_time);
     h_info.total_volume_mm3 = hton<float>(stats.total_weight / mat.material_density.getFloat());
     h_info.total_weight_g = hton<float>(stats.total_weight);

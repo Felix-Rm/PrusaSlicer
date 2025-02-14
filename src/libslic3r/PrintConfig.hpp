@@ -1296,6 +1296,7 @@ PRINT_CONFIG_CLASS_DEFINE(
     ((ConfigOptionFloat,                      max_initial_exposure_time))
     ((ConfigOptionString,                     sla_archive_format))
     ((ConfigOptionFloat,                      sla_output_precision))
+    ((ConfigOptionBool,                       goo_advanced_mode))
     ((ConfigOptionString,                     printer_model))
 )
 

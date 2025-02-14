@@ -713,6 +713,7 @@ static std::vector<std::string> s_Preset_sla_printer_options {
     "time_estimate_correction",
     "min_exposure_time", "max_exposure_time",
     "min_initial_exposure_time", "max_initial_exposure_time", "sla_archive_format", "sla_output_precision",
+    "goo_advanced_mode",
     //FIXME the print host keys are left here just for conversion from the Printer preset to Physical Printer preset.
     "print_host", "printhost_apikey", "printhost_cafile",
     "printer_notes",

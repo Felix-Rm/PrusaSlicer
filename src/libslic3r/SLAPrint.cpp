@@ -864,6 +864,7 @@ bool SLAPrint::invalidate_state_by_config_options(const std::vector<t_config_opt
         "display_orientation"sv,
         "sla_archive_format"sv,
         "sla_output_precision"sv,
+        "goo_advanced_mode"sv,
         // tilt params
         "delay_before_exposure"sv,
         "delay_after_exposure"sv,

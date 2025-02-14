@@ -3001,6 +3001,7 @@ void TabPrinter::build_sla()
     optgroup = page->new_optgroup(L("Output"));
     optgroup->append_single_option_line("sla_archive_format");
     optgroup->append_single_option_line("sla_output_precision");
+    optgroup->append_single_option_line("goo_advanced_mode");
 
     build_print_host_upload_group(page.get());
 

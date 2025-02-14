@@ -4712,6 +4712,16 @@ void PrintConfigDef::init_sla_params()
     def->mode = comExpert;
     def->set_default_value(new ConfigOptionFloat(0.001));
 
+    def = this->add("goo_advanced_mode", coBool);
+    def->label = L("GOO advanced mode");
+    def->tooltip = L(
+        "Advanced mode in GOO files allows the slicer to specify exact per-layer print settings. When disabled "
+        "the printer will compute per-layer settings from the general print settings. Advanced mode must be "
+        "disabled when exporting files for use with ELEGOO Saturn printers."
+    );
+    def->mode = comExpert;
+    def->set_default_value(new ConfigOptionBool(true));
+
     // Declare retract values for material profile, overriding the print and printer profiles.
     for (const char* opt_key : {
         // float
